@@ -15,6 +15,7 @@ public class UserService {
                         "Tamas",
                         "Nagy",
                         "tamasnagy2002@gamil.com",
+                        "0757290693",
                         LocalDate.of(2002, Month.MARCH, 23),
                         22,
                         "hash")
