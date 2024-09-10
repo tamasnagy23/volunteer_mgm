@@ -1,46 +1,54 @@
-package com.example.volunteer_mgm.user;
+package com.example.volunteer_mgm.app_user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+import java.time.Period;
 
+@Entity
+@Table
+public class App_User {
+
+    @Id
+    @SequenceGenerator(
+            name = "app_user_sequence",
+            sequenceName = "app_user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "app_user_sequence"
+    )
+    private Long id;
     private String first_name;
     private String last_name;
     private String email;
     private String phone_number;
     private LocalDate date_of_birth;
-    private Integer age;
     private String password;
+    @Transient
+    private Integer age;
 
-    public User() {
+
+    public App_User() {
     }
 
-    public User(long id, String first_name, String last_name, String email, String phone_number, LocalDate date_of_birth, Integer age, String password) {
+    public App_User(long id, String first_name, String last_name, String email, String phone_number, LocalDate date_of_birth, String password) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
         this.date_of_birth = date_of_birth;
-        this.age = age;
         this.password = password;
     }
 
-    public User(String first_name, String last_name, String email, String phone_number, LocalDate date_of_birth, Integer age, String password) {
+    public App_User(String first_name, String last_name, String email, String phone_number, LocalDate date_of_birth, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
         this.date_of_birth = date_of_birth;
-        this.age = age;
         this.password = password;
     }
 
@@ -93,7 +101,7 @@ public class User {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.date_of_birth, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
@@ -110,7 +118,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "App_User{" +
                 "id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
