@@ -25,4 +25,15 @@ public class App_UserController {
     public void registerNewApp_User(@RequestBody App_User app_user){
         app_userService.addNewApp_User(app_user);
     }
+
+    @DeleteMapping(path = "{app_userId}")
+    public void deleteApp_User(@PathVariable ("app_userId") Long app_userId){
+        app_userService.deleteApp_User(app_userId);
+    }
+
+    @PutMapping("{app_userId}")
+    public void updateApp_User(@PathVariable("app_userId") Long app_userId, @RequestParam(required = false) String last_name,
+                               @RequestParam(required = false) String first_name, @RequestParam(required = false) String email){
+        app_userService.updateApp_User(app_userId, last_name, first_name, email);
+    }
 }
