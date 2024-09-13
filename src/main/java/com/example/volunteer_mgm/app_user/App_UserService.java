@@ -12,10 +12,12 @@ import java.util.Optional;
 public class App_UserService {
 
     private final App_UserRepository app_userRepository;
+    private final App_UserPasswordService app_userPasswordService;
 
     @Autowired
-    public App_UserService(App_UserRepository app_userRepository) {
+    public App_UserService(App_UserRepository app_userRepository, App_UserPasswordService appUserPasswordService) {
         this.app_userRepository = app_userRepository;
+        app_userPasswordService = appUserPasswordService;
     }
 
 
@@ -31,8 +33,13 @@ public class App_UserService {
         if (app_userOptional.isPresent()) {
             throw new IllegalStateException("Email already in use");
         }
+
+        String hashedPassword = app_userPasswordService.hashPassword(app_user.getPassword());
+        app_user.setPassword(hashedPassword);
+
         app_userRepository.save(app_user);
     }
+
 
     ///delete method to delete existing user
     public void deleteApp_User(Long app_userId) {
